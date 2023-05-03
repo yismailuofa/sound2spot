@@ -9,7 +9,7 @@ def getTitleAndTracks(URL):
 
     title = soup.select_one("meta[property='twitter:title']").get("content")
 
-    for p in enumerate(soup.find_all("p")):
+    for p in soup.find_all("p"):
         if "Tracklist" in p.text:
             return title, [row for row in p.text.split("\n") if "-" in row]
 
