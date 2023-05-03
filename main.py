@@ -3,58 +3,30 @@ from spotipy.oauth2 import SpotifyOAuth
 import os
 from dotenv import load_dotenv
 
+from soundcloud import getTitleAndTracks
+
 # Replace with your own Spotify client ID and secret
 redirect_uri = 'http://localhost:8000'
 
 load_dotenv()
 
 # Authentication
-auth_manager = SpotifyOAuth(client_id=os.getenv('SPOTIFY_CLIENT_ID'),
+auth_manager = SpotifyOAuth(client_id=os.getenv('SPOTIFY_CLIENT_ID'),  # Change this to your own
+                            # Change this to your own
                             client_secret=os.getenv('SPOTIFY_CLIENT_SECRET'),
                             redirect_uri=redirect_uri,
                             scope='playlist-modify-public')
 
 sp = spotipy.Spotify(auth_manager=auth_manager)
 
-# List of songs
-songs = '''
-Jazmine Sullivan - Mascara
-Syd - Got Her Own
-Jazmine Sullivan - Brand New
-Jesse Boykins III - B4 The Night Is Thru (Syd Remix)
-Marsha Ambrosius - With You
-Solange - F.U.B.U. (feat. The-Dream & BJ The Chicago Kid)
-Tweet - Magic
-Alicia Keys - Fire We Make (feat. Maxwell)
-Sonder - What You Heard
-Chase Shakur - sink or swim
-Lizzie Berchie - I Hope
-Kelela - Waitin (Radio 1's Piano Sessions)
-Drake - Flight's Booked
-Jaz Karis - OPTION
-Dayo Bello & Odeal - Outside
-Venna, Yussef Dayes, & Marco Bernardis - Sicily' Box (feat. Rocco Palladino)
-Jhene Aiko - Calm & Patient
-Nao - It's You
-Jessie Ware - Kind Of...Sometimes...Maybe
-Teedra Moses - Beautiful Chaos
-Lion Babe - Jungle Lady
-Fatima - Note to Self
-Iman Omari - Energy
-Kelela - Send Me Out
-Sade - No Ordinary Love
-Erykah Badu - Didn't Cha Know
-Jill Scott - A Long Walk
-Lauryn Hill - Nothing Even Matters (feat. D'Angelo)
-Avant - My First Love
-Aaliyah - 4 Page Letter
-'''
+# Change this to your own
+URL = "https://soundcloud.com/g0homemasterpiece/after-dark-episode-31"
 
-# Prompt for playlist title
-title = "After Dark Episode 31"
+title, song_list = getTitleAndTracks(URL)
 
-# Split the list of songs into individual lines
-song_list = songs.split('\n')
+if title is None or song_list is None:
+    print("Could not fetch url")
+    exit(1)
 
 
 def search_track(track_name):
